@@ -5,6 +5,7 @@ function SequenceBehaviorSessionSummary_BATCH(input)
 %
 %% Check Inputs
 origDir = cd;    
+
 if nargin == 0
     % If isempty(Input) use uigetdir to load the ssnData .mat file
     [fileDir] = uigetdir(origDir);
