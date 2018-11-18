@@ -21,10 +21,10 @@ curSeqList = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'listbox
 addSeqBtn = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'pushbutton', 'String', 'Add Sequence',...
     'Position', [0.0465, 0.12, 0.4, 0.07], 'Callback', @addSeq);
 
-rmvSeqBtn = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'pushbutton', 'String', 'Add Sequence',...
+rmvSeqBtn = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'pushbutton', 'String', 'Remove Sequence',...
     'Position', [0.51, 0.12, 0.4, 0.07], 'Callback', @rmvSeq);
 
-saveList = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'pushbutton', 'String', 'Add Sequence',...
+saveList = uicontrol(listCreationFig, 'Units', 'Normalized', 'Style', 'pushbutton', 'String', 'Save Sequence List',...
     'Position', [0.0465, 0.02, 0.8635, 0.07], 'Callback', @svList);
 
 end
@@ -59,7 +59,8 @@ end
 
 function svList(source,event)
     global curSeqList
-    odorSeqList = curSeqList.UserData; %#ok<NASGU>
-    outputFileName = inputdlg('Determine File Name', 'Filename', 1, 'Odorlist');
-    save([outputFileName{1} '.mat'], 'odorSeqList');
+    odorListCell = curSeqList.UserData'; %#ok<NASGU>
+    outputFileName = inputdlg('Determine File Name', 'Filename', 1, {'Odorlist'});
+    uisave('odorListCell', [outputFileName{1} '.mat']);
+    fprintf('Odorlist Saved!\n');
 end
