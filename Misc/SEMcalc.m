@@ -1,4 +1,4 @@
-function [semVal] = SEMcalc(data, nVal)
+function [semVal] = SEMcalc(data, nVal, dim)
 %% SEMcalc Calculates SEM
 % data = data set where SEM is being calculated
 % nVal = determination if denominator is n or n-1
@@ -9,11 +9,12 @@ if isempty(data)
     return
 end
 if nargin==1
-    nVal = 'n-1';
+    nVal = 0;
+    dim = 1;
+elseif nargin==2
+    dim = 1;
 end
 
-if strcmp(nVal, 'n')
-    semVal = nanstd(data,0,1)/sqrt(size(data,1));
-elseif strcmp(nVal, 'n-1')
-    semVal = nanstd(data,0,1)/sqrt(size(data,1)-1);
-end
+denom = sum(~isnan(data),dim);
+denom(denom==0) = 1;
+semVal = nanstd(data,nVal,dim)./sqrt(denom-1);
